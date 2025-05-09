@@ -50,8 +50,10 @@ class User:
     
     @staticmethod
     def validate_account(account) -> Tuple[bool, str]:
+        if account == None:
+            return (False, "Insira uma conta no padrão XXXXX-X")
         if len(account) != 7:
-            return(False, "Conta inválida")
+            return(False, "Conta inválida, siga o padrão XXXXX-X")
         
         if account != re.match("^([0,9]{5}\-[0,9]{1}})$"):
             return (False, "Conta não segue o padrão XXXXX-X")
@@ -61,8 +63,10 @@ class User:
 
     @staticmethod
     def validate_current_balance(current_balance) -> Tuple[bool, str]:
+        if current_balance == None:
+            return (False, "Saldo não pode ser null")
         if type(current_balance) != float:
-            return (False, "Saldo tem que ser float")
+            return (False, "Saldo tem que ser do tipo float")
         
         if current_balance < 0:
             return (False, "Saldo não pode ser negativo")
