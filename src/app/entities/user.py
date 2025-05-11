@@ -22,10 +22,12 @@ class User:
         validar_conta = self.validate_account(account)
         if validar_conta[0] == False:
             raise ParamNotValidated("Account", validar_conta[1])
+        self.account = account
         
         validar_saldo = self.validate_current_balance(current_balance)
         if validar_saldo[0] == False:
             raise ParamNotValidated("Current Balance", validar_saldo[1])
+        self.current_balance = current_balance
         
 
     @staticmethod
@@ -52,6 +54,7 @@ class User:
     def validate_account(account) -> Tuple[bool, str]:
         if account == None:
             return (False, "Insira uma conta no padrão XXXXX-X")
+        
         if len(account) != 7:
             return(False, "Conta inválida, siga o padrão XXXXX-X")
         
@@ -65,6 +68,7 @@ class User:
     def validate_current_balance(current_balance) -> Tuple[bool, str]:
         if current_balance == None:
             return (False, "Saldo não pode ser null")
+        
         if type(current_balance) != float:
             return (False, "Saldo tem que ser do tipo float")
         
@@ -74,5 +78,3 @@ class User:
         return (True, "Saldo válido")
 
 
-teste = User("oiiii", "4343", "43434-3", 1000)
-print(teste)
