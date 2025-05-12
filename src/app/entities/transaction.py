@@ -1,7 +1,8 @@
 from typing import Tuple
 from ..errors.entity_errors import ParamNotValidated
+from ..enums.transaction_type_enum import TransactionTypeEnum
 
-class Transacoes:
+class Transaction:
     tipo_transacao: str
     value: float
     current_balance: float
@@ -29,14 +30,12 @@ class Transacoes:
         self.timestamp = timestamp
 
     @staticmethod
-    def validate_tipo_transacao(tipo_transacao) -> Tuple[bool, str]:
-        if tipo_transacao != "withdraw" or tipo_transacao != "deposit":
-            return (False, "Tipo de transação inválida")
-
-        if tipo_transacao == None:
-            return (False, "Insira um tipo de transação")
-        
-        return (True, "Tipo de transação válido")
+    def validate_tipo(tipo_transacao: TransactionTypeEnum) -> Tuple[bool,str]:
+        if tipo_transacao is None:
+            return (False, "Type is required")
+        if type(tipo_transacao) != TransactionTypeEnum:
+            return (False, "Type must be a TransactionTypeEnum")
+        return (True, "Validation OK")
     
     @staticmethod
     def validate_value(value) -> Tuple[bool, str]:
