@@ -8,9 +8,9 @@ class Test_Transaction:
     def test_transaction(self):
         transaction = Transaction(TransactionTypeEnum.DEPOSIT, 43, 4300, 1)
         assert transaction.type_transaction == TransactionTypeEnum.DEPOSIT
-        assert transaction.value_transaction == 43   
+        assert transaction.value == 43   
         assert transaction.current_balance == 4300
-        assert transaction.time_stamp == 1
+        assert transaction.timestamp == 1
         
     def test_transaction_dict(self):
         transaction = Transaction(TransactionTypeEnum.DEPOSIT, 43, 4300, 1)

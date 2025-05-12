@@ -45,6 +45,9 @@ class User:
         if agency == None:
             return(False, "Insira uma agência")
         
+        if agency != str:
+            return(False, "Agency must be string")
+        
         if len(agency) !=4 or not agency.isdigit():
             raise Exception("A agência deve conter 4 dígitos!")
 

@@ -1,6 +1,5 @@
 from ..enums.transaction_type_enum import TransactionTypeEnum
 from ..entities.transaction import Transaction
-
 from typing import Dict, Optional, List 
 
 
