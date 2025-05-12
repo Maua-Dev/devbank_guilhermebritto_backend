@@ -35,46 +35,46 @@ class Transaction:
             return (False, "Type is required")
         
         if type(type_transaction) != TransactionTypeEnum:
-            return (False, "Type must be a TransactionTypeEnum")
+            return (False, "Type must be DEPOSIT or WITHDRAW")
         
         return (True, "Validation OK")
     
     @staticmethod
     def validate_value(value) -> Tuple[bool, str]:
         if value == None:
-            return (False, "Insira um valor")
+            return (False, "Insert a value")
         
         if value != float:
             return (False, "Value must be float")
         
         if value < 0:
-            return (False, "Valor não pode ser menor que 0")
+            return (False, "Value can't be less than 0")
         
-        return (True, "Valor válido")
+        return (True, "Valid value")
 
     @staticmethod
     def validate_current_balance(current_balance) -> Tuple[bool, str]:
         if current_balance == None:
-            return (False, "Saldo não pode ser null")
+            return (False, "Balance can't be null")
         
         if type(current_balance) != float:
-            return (False, "Saldo tem que ser do tipo float")
+            return (False, "Balance must be float")
         
         if current_balance < 0:
-            return (False, "Saldo não pode ser menor que 0")
+            return (False, "Balance can't be less than 0")
         
-        return (True, "Saldo válido")
+        return (True, "Valid balance")
 
     @staticmethod
     def validate_timestamp(timestamp) -> Tuple[bool, str]:
         if timestamp == None:
-            return (False, "Tempo de transação inválido")
+            return (False, "Transaction time invalid")
         
         if type(timestamp) != float:
-            return (False, "Tempo tem que ser float")
+            return (False, "Time must be float")
         
         if timestamp < 0:
-            return (False, "Tempo não pode ser negativo")
+            return (False, "Time can't be negative")
         
-        return (True, "Tempo válido")
+        return (True, "Valid time")
     

@@ -33,51 +33,51 @@ class User:
     @staticmethod
     def validate_name(name) -> Tuple[bool, str]:
         if name == None:
-            return(False, "Insira um nome")
+            return(False, "Insert a name")
         
         if type(name) != str or len(name) < 3:
-            return(False, "Insira um nome válido")
+            return(False, "Insert a valid name")
         
-        return (True, "nome válido")
+        return (True, "Valid name")
     
     @staticmethod
     def validate_agency(agency) -> Tuple[bool, str]:
         if agency == None:
-            return(False, "Insira uma agência")
+            return(False, "Insert an agency")
         
         if agency != str:
             return(False, "Agency must be string")
         
         if len(agency) !=4 or not agency.isdigit():
-            raise Exception("A agência deve conter 4 dígitos!")
+            raise Exception("Agency must have 4 digits")
 
-        return (True, "Agência válida")
+        return (True, "Valid Agency")
     
     @staticmethod
     def validate_account(account) -> Tuple[bool, str]:
         if account == None:
-            return (False, "Insira uma conta no padrão XXXXX-X")
+            return (False, "Insert an account following XXXXX-X")
         
         if len(account) != 7:
-            return(False, "Conta inválida, siga o padrão XXXXX-X")
+            return(False, "Invalid account, follow XXXXX-X")
         
         if account != re.match("^([0,9]{5}\-[0,9]{1}})$"):
-            return (False, "Conta não segue o padrão XXXXX-X")
+            return (False, "Account does not follow XXXXX-X")
 
-        return (True, "Conta válida")
+        return (True, "Valid account")
 
 
     @staticmethod
     def validate_current_balance(current_balance) -> Tuple[bool, str]:
         if current_balance == None:
-            return (False, "Saldo não pode ser null")
+            return (False, "Balance can't be null")
         
         if type(current_balance) != float:
-            return (False, "Saldo tem que ser do tipo float")
+            return (False, "Balance must be float")
         
         if current_balance < 0:
-            return (False, "Saldo não pode ser negativo")
+            return (False, "Balance can't be negative")
         
-        return (True, "Saldo válido")
+        return (True, "Valid balance")
 
 

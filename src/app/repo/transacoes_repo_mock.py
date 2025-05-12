@@ -8,8 +8,8 @@ class Transaction_repo_mock:
     
     def __init__(self):
         self.transaction = {
-            1: Transaction(tipo_transacao=TransactionTypeEnum.DEPOSIT, value=100.0, current_balance=4300, timestamp=1),
-            2: Transaction(tipo_transacao=TransactionTypeEnum.WITHDRAWAL, value=50.0, current_balance=1000, timestamp=1),
+            1: Transaction(tipo_transacao=TransactionTypeEnum.DEPOSIT, value=1000, current_balance=4300, timestamp=1),
+            2: Transaction(tipo_transacao=TransactionTypeEnum.WITHDRAWAL, value=430, current_balance=1000, timestamp=1),
         }
         
     def get_all_transactions(self) -> List[Transaction]:
