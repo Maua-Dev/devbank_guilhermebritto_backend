@@ -17,7 +17,7 @@ class ItemRepositoryMock(IItemRepository):
         }
         
     def get_all_items(self) -> List[Item]:
-        return self.items.values()
+        return list(self.items.values())
     
     def get_item(self, item_id: int) -> Optional[Item]:
         return self.items.get(item_id, None)

@@ -4,12 +4,12 @@ from src.app.errors.entity_errors import ParamNotValidated
 
 class Test_user:
     def test_user(self):
-        user= User("gui43", agency="4343", account="43434-3")
+        user= User("gui43", agency="4343", account="43434-3", current_balance=4300.0)
 
         assert user.name == "gui43"
         assert user.agency == "4343"
         assert user.account == "43434-3"
-        assert user.current_balance == 4300
+        assert user.current_balance == 4300.0
 
     def test_user_name_is_none(self):
         with pytest.raises(ParamNotValidated):

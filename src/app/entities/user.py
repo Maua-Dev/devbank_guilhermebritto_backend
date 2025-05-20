@@ -6,7 +6,7 @@ class User:
     name: str
     agency: str
     account: str
-    current_balance= float
+    current_balance: float
 
     def __init__(self, name: str=None, agency: str=None, account: str=None, current_balance: float=1000.0):
         validation_name= self.validate_name(name)

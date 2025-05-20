@@ -9,8 +9,8 @@ class UserRepositoryMock(InterfaceUserRepository):
 
     def __init__(self):
         self.users = {
-            1: User("Guilherme 43", agency="4343", account="43434-3", current_balance=4300),
-            2: User("nao sei", agency="0000", account="00043-0", current_balance=2000),
+            1: User("Guilherme 43", agency="4343", account="43434-3", current_balance=4300.0),
+            2: User("nao sei", agency="0000", account="00043-0", current_balance=2000.0),
         }
     
     def get_user(self, id_user: int) -> Optional[User]:

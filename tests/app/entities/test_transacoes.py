@@ -6,11 +6,10 @@ from src.app.enums.transaction_type_enum import TransactionTypeEnum
 
 class Test_transaction:
     def test_transaction(self):
-        transaction= Transaction(type=TransactionTypeEnum.deposit, value=430, current_balance=4300.0, timestamp=123.4)
-
+        transaction = Transaction(type=TransactionTypeEnum.deposit, value=430.0, current_balance=4300.0, timestamp=123.4)
         assert transaction.type == TransactionTypeEnum.deposit
-        assert transaction.value == 430
-        assert transaction.current_balance == 430
+        assert transaction.value == 430.0
+        assert transaction.current_balance == 4300.0
         assert transaction.timestamp == 123.4
     
     def test_type_is_none(self):
