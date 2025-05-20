@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-
 from ..entities.transaction import Transaction
-
 from ..entities.user import User
 
-class IUserRepository(ABC):
+class InterfaceUserRepository(ABC):
 
     
     @abstractmethod

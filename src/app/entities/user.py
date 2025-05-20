@@ -1,83 +1,91 @@
 from typing import Tuple
-import re
+from re import search
 from ..errors.entity_errors import ParamNotValidated
 
 class User:
     name: str
     agency: str
     account: str
-    current_balance: float
+    current_balance= float
 
-    def __init__(self, name: str, agency: str, account: str, current_balance: float):
-        validar_nome = self.validate_name(name)
-        if validar_nome[0] == False:
-            raise ParamNotValidated("name", validar_nome[1])
-        self.name = name
+    def __init__(self, name: str=None, agency: str=None, account: str=None, current_balance: float=1000.0):
+        validation_name= self.validate_name(name)
+        if validation_name[0] is False:
+            raise ParamNotValidated("name", validation_name[1])
+        self.name= name
 
-        validar_agencia = self.validate_agency(agency)
-        if validar_agencia[0] == False:
-            raise ParamNotValidated("agency", validar_agencia[1])
-        self.agency = agency
+        validation_agency= self.validate_agency(agency)
+        if validation_agency[0] is False:
+            raise ParamNotValidated("agency", validation_agency[1])
+        self.agency= agency
         
-        validar_conta = self.validate_account(account)
-        if validar_conta[0] == False:
-            raise ParamNotValidated("Account", validar_conta[1])
-        self.account = account
-        
-        validar_saldo = self.validate_current_balance(current_balance)
-        if validar_saldo[0] == False:
-            raise ParamNotValidated("Current Balance", validar_saldo[1])
-        self.current_balance = current_balance
-        
+        validation_account= self.validate_account(account)
+        if validation_account[0] is False:
+            raise ParamNotValidated("agency", validation_account[1])
+        self.account= account
+
+        validation_current_balance= self.validate_current_balance(current_balance)
+        if validation_current_balance[0] is False:
+            raise ParamNotValidated("current balance", validation_current_balance[1])
+        self.current_balance= current_balance
 
     @staticmethod
-    def validate_name(name) -> Tuple[bool, str]:
-        if name == None:
-            return(False, "Insert a name")
-        
-        if type(name) != str or len(name) < 3:
-            return(False, "Insert a valid name")
-        
-        return (True, "Valid name")
+    def validate_name(name: str) -> Tuple[bool, str]:
+        if name is None:
+            return(False, "Name is required")
+        if type(name) != str:
+            return (False, "Name must be a string")
+        if name.isdigit():
+            return(False, "Name can't be numeric")
+        if len(name) < 3:
+            return(False, "Name must be at least 3 characters long")
+        return(True, "")
     
     @staticmethod
-    def validate_agency(agency) -> Tuple[bool, str]:
-        if agency == None:
-            return(False, "Insert an agency")
-        
-        if agency != str:
-            return(False, "Agency must be string")
-        
-        if len(agency) !=4 or not agency.isdigit():
-            raise Exception("Agency must have 4 digits")
-
-        return (True, "Valid Agency")
+    def validate_agency(agency: str) -> Tuple[bool, str]:
+        if agency is None:
+            return(False, "Agency is required")
+        if type(agency) != str:
+            return(False, "Agency must be a integer")
+        if not search(r'^\d{4}$', agency):
+            return(False, "Agency must be in the format 'XXXX'")
+        return(True, "")
     
     @staticmethod
-    def validate_account(account) -> Tuple[bool, str]:
-        if account == None:
-            return (False, "Insert an account following XXXXX-X")
-        
-        if len(account) != 7:
-            return(False, "Invalid account, follow XXXXX-X")
-        
-        if account != re.match("^([0,9]{5}\-[0,9]{1}})$"):
-            return (False, "Account does not follow XXXXX-X")
-
-        return (True, "Valid account")
-
-
+    def validate_account(account: str) -> Tuple[bool, str]:
+        if account is None:
+            return(False, "Account is required")
+        if type(account) != str:
+            return(False, "Account must be a string")
+        if not search(r'^\d{5}\-\d$', account):
+            return(False, "Account must be in the format 'XXXXX-X'")
+        return(True, "")
+    
     @staticmethod
-    def validate_current_balance(current_balance) -> Tuple[bool, str]:
-        if current_balance == None:
-            return (False, "Balance can't be null")
-        
+    def validate_current_balance(current_balance: float) -> Tuple[bool, str]:
         if type(current_balance) != float:
-            return (False, "Balance must be float")
-        
+            return(False, "Current balance must be a float")
         if current_balance < 0:
-            return (False, "Balance can't be negative")
+            return(False, "Current balance can't be negative")
+        return(True, "")
+    
+    @staticmethod
+    def validate_id_user(id_user: int) -> Tuple[bool, str]:
+        if id_user is None:
+            return (False, "Missing 'id_user' parameter")
+
+        if type(id_user) != int:
+            return (False, "Parameter 'id_user' must be an integer")
         
-        return (True, "Valid balance")
+        if id_user < 0:
+            return (False, "Parameter 'id_user' must be a positive integer")
 
-
+        return (True, "")
+    
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "agency": self.agency,
+            "account": self.account,
+            "current_balance": self.current_balance
+        }

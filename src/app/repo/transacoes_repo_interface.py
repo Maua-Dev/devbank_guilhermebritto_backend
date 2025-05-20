@@ -1,11 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
-
 from ..entities.transaction import Transaction
 
-
-
-class ITransactionRepository(ABC):
+class InterfaceTransactionRepository(ABC):
 
     @abstractmethod
     def get_all_transactions(self) -> List[Transaction]:
