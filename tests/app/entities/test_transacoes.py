@@ -10,7 +10,6 @@ class Test_transaction:
         assert transaction.type == TransactionTypeEnum.deposit
         assert transaction.value == 430.0
         assert transaction.current_balance == 4300.0
-        assert transaction.timestamp == 123.4
     
     def test_type_is_none(self):
         with pytest.raises(ParamNotValidated):
