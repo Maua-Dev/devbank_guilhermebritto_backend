@@ -47,5 +47,17 @@ class Environments:
         else:
             raise EnvironmentNotFound("STAGE")
         
+
+    @staticmethod
+    def get_envs() -> "Environments":
+        """
+        Returns the Environments object. This method should be used to get the Environments object instead of instantiating it directly.
+        :return: Environments (stage={self.stage})
+
+        """
+        envs = Environments()
+        envs.load_envs()
+        return envs
+        
     def __repr__(self):
-        return self.__dict__
+        return f"Environments(stage={self.stage})"
