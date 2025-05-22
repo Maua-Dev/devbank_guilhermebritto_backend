@@ -12,8 +12,8 @@ app = FastAPI()
 
 use_id = 1
 
-UserRepositoryMock = Environments.get_user_repo()
-TransactionRepositoryMock = Environments.get_transaction_repo()
+UserRepositoryMock = Environments.get_user_repo()()
+TransactionRepositoryMock = Environments.get_transaction_repo()()
 
 @app.get("/")
 def get_user():
