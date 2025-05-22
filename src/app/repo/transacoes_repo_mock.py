@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional
 from ..entities.transaction import Transaction
-from src.app.enums.transaction_type_enum import TransactionTypeEnum
+from ..enums.transaction_type_enum import TransactionTypeEnum
 from ..repo.transacoes_repo_interface import InterfaceTransactionRepository
 
 class TransactionRepositoryMock(InterfaceTransactionRepository):

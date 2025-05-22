@@ -1,6 +1,6 @@
 from typing import Dict, List, Optional
 from ..entities.transaction import Transaction
-from src.app.enums.transaction_type_enum import TransactionTypeEnum
+from ..enums.transaction_type_enum import TransactionTypeEnum
 from ..entities.user import User
 from .user_repo_interface import InterfaceUserRepository
 

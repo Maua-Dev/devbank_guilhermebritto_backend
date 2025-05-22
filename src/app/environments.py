@@ -2,9 +2,9 @@ from enum import Enum
 import os
 from .errors.environment_errors import EnvironmentNotFound
 from .repo.user_repo_interface import IUserRepository
-from .repo.transaction_repo_interface import ITransactionRepository
+from .repo.transacoes_repo_interface import ITransactionRepository
 from .repo.user_repo_mock import UserRepositoryMock
-from .repo.transaction_repo_mock import TransactionRepositoryMock
+from .repo.transacoes_repo_mock import TransactionRepositoryMock
 
 
 class STAGE(Enum):
