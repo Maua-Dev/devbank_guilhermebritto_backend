@@ -17,7 +17,8 @@ TransactionRepositoryMock = Environments.get_transaction_repo()
 
 @app.get("/")
 def get_user():
-    user = UserRepositoryMock.get_user(user_id = use_id)
+    user = User(get_user = UserRepositoryMock.get_user(id_user = use_id))
+    #user = UserRepositoryMock.get_user(id_user = use_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
