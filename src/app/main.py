@@ -12,8 +12,8 @@ app = FastAPI()
 
 use_id = 1
 
-user_repo = Environments.get_user_repo()
-transaction_repo = Environments.get_transaction_repo()
+UserRepositoryMock = Environments.get_user_repo()
+TransactionRepositoryMock = Environments.get_transaction_repo()
 
 @app.get("/")
 def get_user():
@@ -23,7 +23,7 @@ def get_user():
     
     return {
         "user_id": use_id,
-        "user": user.to_dict()
+        "user": user.user_to_dict()
     }
 
 
