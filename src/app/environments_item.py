@@ -36,7 +36,7 @@ class Environments_item:
 
     @staticmethod
     def get_item_repo() -> IItemRepository:
-        if Environments.get_envs().stage == STAGE.TEST:
+        if Environments_item.get_envs().stage == STAGE.TEST:
             from .repo.item_repository_mock import ItemRepositoryMock
             return ItemRepositoryMock
         # use "elif" conditional to add other stages
@@ -45,13 +45,13 @@ class Environments_item:
         
 
     @staticmethod
-    def get_envs() -> "Environments":
+    def get_envs() -> "Environments_item":
         """
         Returns the Environments object. This method should be used to get the Environments object instead of instantiating it directly.
         :return: Environments (stage={self.stage})
 
         """
-        envs = Environments()
+        envs = Environments_item()
         envs.load_envs()
         return envs
 
