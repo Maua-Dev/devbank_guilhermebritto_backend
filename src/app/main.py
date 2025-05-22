@@ -1,4 +1,4 @@
-from app.entities import Environments
+from .environments import Environments
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 from .repo.transacoes_repo_mock import TransactionRepositoryMock
