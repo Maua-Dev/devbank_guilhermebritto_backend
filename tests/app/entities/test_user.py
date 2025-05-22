@@ -13,7 +13,7 @@ class Test_user:
 
     def test_user_to_dict(self):
         user= User("gui43", agency="4343", account="43434-3", current_balance=4300.0)
-        assert user.to_dict() == {
+        assert user.user_to_dict() == {
             "name": "gui43",
             "agency": "4343",
             "account": "43434-3",
