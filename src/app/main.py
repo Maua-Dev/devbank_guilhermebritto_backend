@@ -21,7 +21,10 @@ def get_user():
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    return user.to_dict()
+    return {
+        "user_id": use_id,
+        "user": user.to_dict()
+    }
 
 
 

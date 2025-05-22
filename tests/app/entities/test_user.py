@@ -11,6 +11,16 @@ class Test_user:
         assert user.account == "43434-3"
         assert user.current_balance == 4300.0
 
+    def test_user_to_dict(self):
+        user= User("gui43", agency="4343", account="43434-3", current_balance=4300.0)
+        assert user.to_dict() == {
+            "name": "gui43",
+            "agency": "4343",
+            "account": "43434-3",
+            "current_balance": 4300.0
+        }
+      
+
     def test_user_name_is_none(self):
         with pytest.raises(ParamNotValidated):
             User(agency="4343", account="43434-3")

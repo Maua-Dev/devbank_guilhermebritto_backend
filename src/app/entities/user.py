@@ -82,7 +82,7 @@ class User:
 
         return (True, "")
     
-    def to_dict(self):
+    def user_to_dict(self):
         return {
             "name": self.name,
             "agency": self.agency,
