@@ -1,4 +1,4 @@
-from .environments import Environments
+from src.app.environments import Environments
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 from .repo.transacoes_repo_mock import TransactionRepositoryMock
@@ -22,7 +22,7 @@ def get_user():
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    return user.to_dict()
+    return user.user_to_dict()
 
 
 

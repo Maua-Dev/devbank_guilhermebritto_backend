@@ -1,8 +1,8 @@
 from enum import Enum
 import os
 from .errors.environment_errors import EnvironmentNotFound
-from .repo.user_repo_interface import IUserRepository
-from .repo.transacoes_repo_interface import ITransactionRepository
+from .repo.user_repo_interface import InterfaceUserRepository
+from .repo.transacoes_repo_interface import InterfaceTransactionRepository
 from .repo.user_repo_mock import UserRepositoryMock
 from .repo.transacoes_repo_mock import TransactionRepositoryMock
 
@@ -32,7 +32,7 @@ class Environments:
         self.stage = STAGE[os.environ.get("STAGE")]
 
     @staticmethod
-    def get_user_repo() -> IUserRepository:
+    def get_user_repo() -> InterfaceUserRepository:
         if Environments.getenvs().stage == STAGE.TEST:
             return UserRepositoryMock
         
@@ -40,7 +40,7 @@ class Environments:
             raise EnvironmentNotFound("STAGE")
         
     @staticmethod
-    def get_transaction_repo() -> ITransactionRepository:
+    def get_transaction_repo() -> InterfaceTransactionRepository:
         if Environments.getenvs().stage == STAGE.TEST:
             return TransactionRepositoryMock
         
