@@ -33,7 +33,7 @@ class Environments:
 
     @staticmethod
     def get_user_repo() -> InterfaceUserRepository:
-        if Environments.getenvs().stage == STAGE.TEST:
+        if Environments.get_envs().stage == STAGE.TEST:
             return UserRepositoryMock
         
         else:
@@ -41,7 +41,7 @@ class Environments:
         
     @staticmethod
     def get_transaction_repo() -> InterfaceTransactionRepository:
-        if Environments.getenvs().stage == STAGE.TEST:
+        if Environments.get_envs().stage == STAGE.TEST:
             return TransactionRepositoryMock
         
         else:
