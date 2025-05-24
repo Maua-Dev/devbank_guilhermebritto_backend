@@ -1,4 +1,4 @@
-from app.environments import Environments
+from .environments import Environments
 from fastapi import FastAPI, HTTPException
 from mangum import Mangum
 from .repo.transacoes_repo_mock import TransactionRepositoryMock
@@ -24,6 +24,18 @@ def get_user():
     
     return user.user_to_dict()
 
+
+@app.get("/history")
+def get_history():
+    transactions = TransactionRepositoryMock.get_all_transactions()
+    if not transactions:
+        raise HTTPException(status_code=404, detail="Transactions not found")
+    
+    transaction_dict = {"transactions": []}
+    for transaction in transactions:
+        transaction_dict["transactions"].append(transaction.transactions_to_dict())
+
+    return transactions
 
 
 handler = Mangum(app, lifespan="off")

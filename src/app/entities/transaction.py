@@ -75,7 +75,7 @@ class Transaction:
             return(False, "Request must be a dict")
         return(True, "")
     
-    def to_dict(self):
+    def transactions_to_dict(self):
         return {
             "type": self.type.value,
             "value": self.value,
