@@ -37,6 +37,7 @@ def get_history():
 
     return transactions
 
+'''
 @app.post("/withdraw")
 def withdraw_transaction(transaction: Transaction):
     if not transaction_id:
@@ -54,5 +55,6 @@ def deposit_transaction(transaction: Transaction):
     transaction_id = TransactionRepositoryMock.create_deposit_transaction(transaction, use_id)
 
     return {"transaction_id": transaction_id}
+'''
 
 handler = Mangum(app, lifespan="off")
