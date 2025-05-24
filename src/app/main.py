@@ -37,5 +37,22 @@ def get_history():
 
     return transactions
 
+@app.post("/withdraw")
+def create_withdraw_transaction(transaction: Transaction):
+    if not transaction_id:
+        raise HTTPException(status_code=400, detail="Failed to create withdraw transaction")
+    
+    transaction_id = TransactionRepositoryMock.create_withdraw_transaction(transaction, use_id)
+    
+    return {"transaction_id": transaction_id}
+
+@app.post("/deposit")
+def create_deposit_transaction(transaction: Transaction):
+    if not transaction_id:
+        raise HTTPException(status_code=400, detail="Failed to create deposit transaction")
+    
+    transaction_id = TransactionRepositoryMock.create_deposit_transaction(transaction, use_id)
+
+    return {"transaction_id": transaction_id}
 
 handler = Mangum(app, lifespan="off")
