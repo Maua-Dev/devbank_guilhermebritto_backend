@@ -37,12 +37,11 @@ def get_history():
         transaction_dict["transactions"].append(transaction.transactions_to_dict())
 
     return transactions
-
-
+'''
 @app.post("/withdraw")
 def withdraw_transaction(transaction: Transaction):
     pass
-
+'''
 @app.post("/deposit")
 def deposit_transaction(request: dict):
     total = 0
@@ -56,7 +55,6 @@ def deposit_transaction(request: dict):
     cem = request.get("100")
     duzentos = request.get("200")
     
-
     total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
     if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
