@@ -66,11 +66,13 @@ def deposit_transaction(request: dict):
         transaction = TransactionRepositoryMock.create_deposit_transaction(
             transaction=Transaction(
                 type=ItemTypeEnum.deposit,
-                value=total,
-                transaction_id=transaction.id
-            )
+                value=total
+            ),
+            transaction_id=1,
+            current_balance=new_current_balance,
+            timestamp=timestamp
         )
-        
+    
     return {
         "current_balance": new_current_balance,
         "timestamp": timestamp
