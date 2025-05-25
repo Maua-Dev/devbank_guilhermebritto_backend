@@ -37,24 +37,31 @@ def get_history():
 
     return transactions
 
-'''
+
 @app.post("/withdraw")
 def withdraw_transaction(transaction: Transaction):
-    if not transaction_id:
-        raise HTTPException(status_code=400, detail="Failed to create withdraw transaction")
-    
-    transaction_id = TransactionRepositoryMock.create_withdraw_transaction(transaction, use_id)
-
-    return {"transaction_id": transaction_id}
+    pass
 
 @app.post("/deposit")
-def deposit_transaction(transaction: Transaction):
-    if not transaction_id:
-        raise HTTPException(status_code=400, detail="Failed to create deposit transaction")
+def deposit_transaction():
+    total = 0
+    transaction = TransactionRepositoryMock.get_transaction()
+    user = UserRepositoryMock.get_user(id_user=use_id)
+    bills = [2, 5, 10, 20, 50, 100, 200]
+
+    for bills, times in transaction.bills.items():
+        total += int(bills) * times
+    if total is None:
+        raise HTTPException(status_code=404, detail="Transaction Not found")
+    elif total < 0:
+        raise HTTPException(status_code=400, detail="Transaction is negative")
+    elif total > 2 * user.current_balance:
+        raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
+    else:
+        UserRepositoryMock.current_balance_after_transaction(id_user=use_id, total=total, transaciton_type="deposit")
+        return {
+            "current_balance": user.current_balance,
+            "timestamp": transaction.timestamp
+        }
     
-    transaction_id = TransactionRepositoryMock.create_deposit_transaction(transaction, use_id)
-
-    return {"transaction_id": transaction_id}
-'''
-
 handler = Mangum(app, lifespan="off")
