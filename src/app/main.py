@@ -43,28 +43,33 @@ def withdraw_transaction(transaction: Transaction):
     pass
 
 @app.post("/deposit")
-def deposit_transaction():
+def deposit_transaction(request: dict):
     total = 0
     transaction = TransactionRepositoryMock.get_transaction()
     user = UserRepositoryMock.get_user(id_user=use_id)
-    bills = {
-        "2": 1,
-        "5": 1,
-        "10": 1,
-        "20": 1,
-        "50": 1,
-        "100": 1,
-        "200": 1
-    }
+    dois = request.get("2")
+    cinco = request.get("5")
+    dez = request.get("10")
+    vinte = request.get("20")
+    cinquenta = request.get("50")
+    cem = request.get("100")
+    duzentos = request.get("200")
+    
 
-    for bill, times in bills.items():
-        total += int(bill) * times
+    total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
     if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
     elif total > 2 * user.current_balance:
         raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
     else:
         current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
+        transaction = TransactionRepositoryMock.create_deposit_transaction(
+            transaction=Transaction(
+                type=ItemTypeEnum.deposit,
+                value=total,
+                transaction_id=transaction.id
+            )
+        )
         
     return {
         "current_balance": current_balance,
