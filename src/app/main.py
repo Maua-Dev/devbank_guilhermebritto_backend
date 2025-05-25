@@ -47,21 +47,27 @@ def deposit_transaction():
     total = 0
     transaction = TransactionRepositoryMock.get_transaction()
     user = UserRepositoryMock.get_user(id_user=use_id)
-    bills = [2, 5, 10, 20, 50, 100, 200]
+    bills = {
+        "2": 1,
+        "5": 1,
+        "10": 1,
+        "20": 1,
+        "50": 1,
+        "100": 1,
+        "200": 1
+    }
 
-    for bills, times in transaction.bills.items():
-        total += int(bills) * times
-    if total is None:
-        raise HTTPException(status_code=404, detail="Transaction Not found")
-    elif total < 0:
+    for bill, times in bills.items():
+        total += int(bill) * times
+    if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
     elif total > 2 * user.current_balance:
         raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
     else:
-        UserRepositoryMock.current_balance_after_transaction(id_user=use_id, total=total, transaciton_type="deposit")
+        current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
         
     return {
-        "current_balance": user.current_balance,
+        "current_balance": current_balance,
         "timestamp": transaction.timestamp
     }
     
