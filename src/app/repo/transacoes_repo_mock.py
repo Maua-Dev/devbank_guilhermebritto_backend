@@ -31,7 +31,7 @@ class TransactionRepositoryMock(InterfaceTransactionRepository):
         return transaction
 
     def create_deposit_transaction(self, transaction: Transaction, transaction_id: int) -> Optional[Transaction]:
-        user = UserRepositoryMock.get_user(id_user=transaction.user_id)
+        user = UserRepositoryMock.get_user(id_user=1)
         value = transaction.value
         if transaction.type != TransactionTypeEnum.deposit:
             return None
