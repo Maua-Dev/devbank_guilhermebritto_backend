@@ -11,7 +11,7 @@ from time import time
 
 app = FastAPI()
 
-use_id = 2
+use_id = 1
 
 UserRepositoryMock = Environments.get_user_repo()()
 TransactionRepositoryMock = Environments.get_transaction_repo()()
@@ -76,7 +76,6 @@ def withdraw_transaction(request: dict):
 @app.post("/deposit")
 def deposit_transaction(request: dict):
     total = 0
-    transaction = TransactionRepositoryMock.get_transaction()
     user = UserRepositoryMock.get_user(id_user=use_id)
     dois = request.get("2")
     cinco = request.get("5")
