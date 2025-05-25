@@ -59,9 +59,10 @@ def deposit_transaction():
         raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
     else:
         UserRepositoryMock.current_balance_after_transaction(id_user=use_id, total=total, transaciton_type="deposit")
-        return {
-            "current_balance": user.current_balance,
-            "timestamp": transaction.timestamp
-        }
+        
+    return {
+        "current_balance": user.current_balance,
+        "timestamp": transaction.timestamp
+    }
     
 handler = Mangum(app, lifespan="off")
