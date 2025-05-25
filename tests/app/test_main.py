@@ -22,7 +22,7 @@ class TestMain:
             'current_balance': 4300.0,
         }
         assert response == expected_user
-    '''
+'''
     def test_get_history(self):
         repo = TransactionRepositoryMock()
         response = get_history()
@@ -55,15 +55,7 @@ class TestMain:
         }
         response = withdraw_transaction(request)
         expected_response = {
-            'type': 'withdraw',
-            'value': 2.0,
-            'current_balance': 443.0,
-            'timestamp': 123.4
-        }
-        expected_response = {
-            'type': 'withdraw',
-            'value': 2.0,
-            'current_balance': 443.0,
+            'current_balance': 441.0,
             'timestamp': 123.4
         }
         assert response == expected_response
@@ -80,10 +72,8 @@ class TestMain:
         }
         response = deposit_transaction(request)
         expected_response = {
-            'type': 'deposit',
-            'value': 200.0,
-            'current_balance': 443.0,
+            'current_balance': 643.0,
             'timestamp': 123.4
         }
         assert response == expected_response
-    '''
+'''

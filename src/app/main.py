@@ -69,61 +69,47 @@ def withdraw_transaction(request: dict):
             timestamp=timestamp
         ) 
         return {
-        "type": "withdraw",  
-        "value": total,
         "current_balance": new_current_balance,
         "timestamp": timestamp
     }
 
 @app.post("/deposit")
 def deposit_transaction(request: dict):
+    total = 0
     user = UserRepositoryMock.get_user(id_user=use_id)
-    
-    dois = request.get("2", 0)
-    cinco = request.get("5", 0)
-    dez = request.get("10", 0)
-    vinte = request.get("20", 0)
-    cinquenta = request.get("50", 0)
-    cem = request.get("100", 0)
-    duzentos = request.get("200", 0)
+    dois = request.get("2")
+    cinco = request.get("5")
+    dez = request.get("10")
+    vinte = request.get("20")
+    cinquenta = request.get("50")
+    cem = request.get("100")
+    duzentos = request.get("200")
     
     total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
-
     if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
     elif total > 2 * user.current_balance:
         raise HTTPException(status_code=403, detail="Deposit suspect")
+    else:
+        transaction = TransactionRepositoryMock.create_deposit_transaction
+        new_current_balance = UserRepositoryMock.current_balance_after_transaction(
+            transaction=Transaction(
+                type=TransactionTypeEnum.deposit,
+                value= float(total)
+    ),
+    id_user=use_id
+)
 
-    timestamp = time()
-
-    new_current_balance = user.current_balance + float(total)
-
-    temp_transaction = Transaction(
-        type=TransactionTypeEnum.deposit,
-        value=float(total),
-        current_balance=user.current_balance,
-        timestamp=timestamp
-    )
-    new_current_balance = UserRepositoryMock.current_balance_after_transaction(
-        transaction=temp_transaction,
-        id_user=use_id
-    )
-
-    transaction = Transaction(
-        type=TransactionTypeEnum.deposit,
-        value=float(total),
-        current_balance=new_current_balance,
-        timestamp=timestamp
-    )
-
-    TransactionRepositoryMock.create_deposit_transaction(
-        transaction=transaction,
-        transaction_id= use_id,
-    )
-
-    return {
-        "type": "deposit",
-        "value": float(total),
+        timestamp = time()
+        TransactionRepositoryMock.create_deposit_transaction(
+            transaction=Transaction(
+                type=TransactionTypeEnum.deposit,
+                value=total,
+                current_balance=new_current_balance,
+                timestamp=timestamp
+            )
+        ) 
+        return {
         "current_balance": new_current_balance,
         "timestamp": timestamp
     }
