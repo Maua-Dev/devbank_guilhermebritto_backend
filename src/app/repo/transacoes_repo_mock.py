@@ -21,22 +21,15 @@ class TransactionRepositoryMock(InterfaceTransactionRepository):
     def get_transaction(self, transaction_id:int) -> Optional[Transaction]:
         return self.transactions.get(transaction_id, None)
     
-    def create_withdraw_transaction(self, transaction: Transaction, transaction_id: int) -> Optional[Transaction]:
-        user = UserRepositoryMock.get_user(id_user=transaction.user_id)
-        value = transaction.value
+    def create_withdraw_transaction(self, transaction:Transaction) -> Optional[Transaction]:
         if transaction.type != TransactionTypeEnum.withdraw:
             return None
-        user.current_balance = user.current_balance - value
-        self.transactions[transaction_id] = transaction
+        self.transactions[len(self.transactions) +1]= transaction
         return transaction
 
-    def create_deposit_transaction(self, transaction: Transaction, transaction_id: int) -> Optional[Transaction]:
-        user = UserRepositoryMock.get_user(id_user=1)
-        value = transaction.value
+    def create_deposit_transaction(self, transaction: Transaction) -> Optional[Transaction]:
         if transaction.type != TransactionTypeEnum.deposit:
             return None
-        user.current_balance = user.current_balance + value
-        self.transactions[transaction_id] = transaction
+        self.transactions[len(self.transactions) + 1]= transaction
         return transaction
-    
     

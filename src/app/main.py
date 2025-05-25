@@ -76,42 +76,19 @@ def withdraw_transaction(request: dict):
 @app.post("/deposit")
 def deposit_transaction(request: dict):
     total = 0
-    user = UserRepositoryMock.get_user(id_user=use_id)
-    dois = request.get("2")
-    cinco = request.get("5")
-    dez = request.get("10")
-    vinte = request.get("20")
-    cinquenta = request.get("50")
-    cem = request.get("100")
-    duzentos = request.get("200")
-    
-    total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
-    if total < 0:
-        raise HTTPException(status_code=400, detail="Transaction is negative")
-    elif total > 2 * user.current_balance:
-        raise HTTPException(status_code=403, detail="Deposit suspect")
-    else:
-        transaction = TransactionRepositoryMock.create_deposit_transaction
-        new_current_balance = UserRepositoryMock.current_balance_after_transaction(
-            transaction=Transaction(
-                type=TransactionTypeEnum.deposit,
-                value= float(total)
-    ),
-    id_user=use_id
-)
 
-        timestamp = time()
-        TransactionRepositoryMock.create_deposit_transaction(
-            transaction=Transaction(
-                type=TransactionTypeEnum.deposit,
-                value=total,
-                current_balance=new_current_balance,
-                timestamp=timestamp
-            )
-        ) 
-        return {
-        "current_balance": new_current_balance,
-        "timestamp": timestamp
+    for (bill, qty) in request.items():
+        total += int(bill) * qty
+
+    total = float(total)
+    user = UserRepositoryMock.get_user(id_user=use_id)
+    deposit_transaction= Transaction(type=TransactionTypeEnum.deposit, value=total, current_balance=user.current_balance, timestamp=time())
+    transaction = TransactionRepositoryMock.create_deposit_transaction(transaction=deposit_transaction)
+
+
+    return {
+        "current_balance": transaction.curr_balance,
+        "timestamp": transaction.timestamp
     }
 
 handler = Mangum(app, lifespan="off")
