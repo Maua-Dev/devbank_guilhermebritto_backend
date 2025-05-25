@@ -42,7 +42,6 @@ def get_history():
 @app.post("/withdraw")
 def withdraw_transaction(request: dict):
     total = 0
-    transaction = TransactionRepositoryMock.get_transaction()
     user = UserRepositoryMock.get_user(id_user=use_id)
     dois = request.get("2")
     cinco = request.get("5")
@@ -55,8 +54,6 @@ def withdraw_transaction(request: dict):
     total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
     if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
-    elif total > 2 * user.current_balance:
-        raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
     else:
         new_current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
         timestamp = time()
@@ -94,14 +91,14 @@ def deposit_transaction(request: dict):
     else:
         new_current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
         timestamp = time()
-        transaction = TransactionRepositoryMock.create_deposit_transaction(
+        TransactionRepositoryMock.create_deposit_transaction(
             transaction=Transaction(
                 type=TransactionTypeEnum.deposit,
-                value=total
-            ),
-            transaction_id=1,
-            current_balance=new_current_balance,
-            timestamp=timestamp
+                value=total,
+                transaction_id=1,
+                current_balance=new_current_balance,
+                timestamp=timestamp
+            )
         ) 
         return {
         "current_balance": new_current_balance,
