@@ -8,6 +8,7 @@ from .errors.entity_errors import ParamNotValidated
 from .enums.item_type_enum import ItemTypeEnum
 from .entities.user import User
 from time import time
+from .enums.transaction_type_enum import TransactionTypeEnum
 
 app = FastAPI()
 
@@ -61,7 +62,7 @@ def withdraw_transaction(request: dict):
         timestamp = time()
         transaction = TransactionRepositoryMock.create_withdraw_transaction(
             transaction=Transaction(
-                type=ItemTypeEnum.withdraw,
+                type=TransactionTypeEnum.withdraw,
                 value=total
             ),
             transaction_id=1,
@@ -89,13 +90,13 @@ def deposit_transaction(request: dict):
     if total < 0:
         raise HTTPException(status_code=400, detail="Transaction is negative")
     elif total > 2 * user.current_balance:
-        raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
+        raise HTTPException(status_code=403, detail="Deposit suspect")
     else:
         new_current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
         timestamp = time()
         transaction = TransactionRepositoryMock.create_deposit_transaction(
             transaction=Transaction(
-                type=ItemTypeEnum.deposit,
+                type=TransactionTypeEnum.deposit,
                 value=total
             ),
             transaction_id=1,
