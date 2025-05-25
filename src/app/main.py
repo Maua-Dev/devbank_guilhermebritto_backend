@@ -11,7 +11,7 @@ from time import time
 
 app = FastAPI()
 
-use_id = 1
+use_id = 2
 
 UserRepositoryMock = Environments.get_user_repo()()
 TransactionRepositoryMock = Environments.get_transaction_repo()()
@@ -37,11 +37,42 @@ def get_history():
         transaction_dict["transactions"].append(transaction.transactions_to_dict())
 
     return transactions
-'''
+
 @app.post("/withdraw")
-def withdraw_transaction(transaction: Transaction):
-    pass
-'''
+def withdraw_transaction(request: dict):
+    total = 0
+    transaction = TransactionRepositoryMock.get_transaction()
+    user = UserRepositoryMock.get_user(id_user=use_id)
+    dois = request.get("2")
+    cinco = request.get("5")
+    dez = request.get("10")
+    vinte = request.get("20")
+    cinquenta = request.get("50")
+    cem = request.get("100")
+    duzentos = request.get("200")
+    
+    total = dois * 2 + cinco * 5 + dez * 10 + vinte * 20 + cinquenta * 50 + cem * 100 + duzentos * 200
+    if total < 0:
+        raise HTTPException(status_code=400, detail="Transaction is negative")
+    elif total > 2 * user.current_balance:
+        raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
+    else:
+        new_current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
+        timestamp = time()
+        transaction = TransactionRepositoryMock.create_withdraw_transaction(
+            transaction=Transaction(
+                type=ItemTypeEnum.withdraw,
+                value=total
+            ),
+            transaction_id=1,
+            current_balance=new_current_balance,
+            timestamp=timestamp
+        ) 
+        return {
+        "current_balance": new_current_balance,
+        "timestamp": timestamp
+    }
+
 @app.post("/deposit")
 def deposit_transaction(request: dict):
     total = 0
