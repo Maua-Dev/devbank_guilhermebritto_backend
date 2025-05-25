@@ -71,11 +71,10 @@ def deposit_transaction(request: dict):
             transaction_id=1,
             current_balance=new_current_balance,
             timestamp=timestamp
-        )
-    
-    return {
+        ) 
+        return {
         "current_balance": new_current_balance,
         "timestamp": timestamp
     }
-    
+
 handler = Mangum(app, lifespan="off")

@@ -1,4 +1,4 @@
-'''
+
 from fastapi.exceptions import HTTPException
 import pytest
 from src.app.entities.user import User
@@ -20,7 +20,7 @@ class TestMain:
             'current_balance': 4300.0,
         }
         assert response == expected_user
-
+'''
     def test_get_history(self):
         repo = TransactionRepositoryMock()
         response = get_history()
@@ -39,4 +39,4 @@ class TestMain:
             }
         ]
         assert response == expected_history
-        '''
+    '''
