@@ -7,6 +7,7 @@ from .repo.user_repo_mock import UserRepositoryMock
 from .errors.entity_errors import ParamNotValidated
 from .enums.item_type_enum import ItemTypeEnum
 from .entities.user import User
+from time import time
 
 app = FastAPI()
 
@@ -62,7 +63,8 @@ def deposit_transaction(request: dict):
     elif total > 2 * user.current_balance:
         raise HTTPException(status_code=400, detail="Transaction is greater than 2x the current balance")
     else:
-        current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
+        new_current_balance = UserRepositoryMock.current_balance_after_transaction(total=total, id_user=use_id)
+        timestamp = time()
         transaction = TransactionRepositoryMock.create_deposit_transaction(
             transaction=Transaction(
                 type=ItemTypeEnum.deposit,
@@ -72,8 +74,8 @@ def deposit_transaction(request: dict):
         )
         
     return {
-        "current_balance": current_balance,
-        "timestamp": transaction.timestamp
+        "current_balance": new_current_balance,
+        "timestamp": timestamp
     }
     
 handler = Mangum(app, lifespan="off")
